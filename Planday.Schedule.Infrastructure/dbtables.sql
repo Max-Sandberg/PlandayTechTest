@@ -1,20 +1,20 @@
-CREATE TABLE Employee (
+CREATE TABLE Employees (
    Id INTEGER PRIMARY KEY AUTOINCREMENT,
    Name text NOT NULL
 );
 
-CREATE TABLE Shift (
+CREATE TABLE Shifts (
 	Id INTEGER PRIMARY KEY AUTOINCREMENT,
 	EmployeeId INTEGER,
 	Start TEXT NOT NULL, --SQLite doesn't support DateTime types
 	End TEXT NOT NULL, --SQLite doesn't support DateTime types
-	FOREIGN KEY(EmployeeId) REFERENCES Employee(Id)
+	FOREIGN KEY(EmployeeId) REFERENCES Employees(Id)
 );
 
-INSERT INTO Employee (Name) VALUES ('John Doe');
-INSERT INTO Employee (Name) VALUES ('Jane Doe');
+INSERT INTO Employees (Name) VALUES ('John Doe');
+INSERT INTO Employees (Name) VALUES ('Jane Doe');
 
-INSERT INTO Shift (EmployeeId, Start, End)
-VALUES (1, '2022-06-17 12:00:00.000', '2022-06-17 17:00:00.000');
-INSERT INTO Shift (EmployeeId, Start, End)
-VALUES (2, '2022-06-17 09:00:00.000', '2022-06-17 15:00:00.000');
+INSERT INTO Shifts (EmployeeId, Start, End)
+VALUES (1, '2024-10-20 12:00:00', '2024-10-20 17:00:00');
+INSERT INTO Shifts (EmployeeId, Start, End)
+VALUES (2, '2024-10-20 09:00:00', '2024-10-20 15:00:00');

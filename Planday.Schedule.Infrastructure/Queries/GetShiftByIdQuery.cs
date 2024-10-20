@@ -6,22 +6,25 @@ using Planday.Schedule.Queries;
 
 namespace Planday.Schedule.Infrastructure.Queries
 {
-    public class GetAllShiftsQuery : BaseQuery, IGetAllShiftsQuery
+    public class GetShiftByIdQuery : BaseQuery, IGetShiftByIdQuery
     {
         private const string Sql = @"
             SELECT Id, EmployeeId, Start, End
-            FROM Shifts;";
+            FROM Shifts
+            WHERE Id = @Id;";
 
-        public GetAllShiftsQuery(IConnectionStringProvider connectionStringProvider)
+        public GetShiftByIdQuery(IConnectionStringProvider connectionStringProvider)
             : base(connectionStringProvider) { }
 
-        public async Task<IReadOnlyCollection<Shift>> QueryAsync()
+        public async Task<Shift?> QueryAsync(long id)
         {
             await using var sqlConnection = GetConnection();
 
-            var dbShifts = await sqlConnection.QueryAsync<DbShift>(Sql);
+            var dbShift = await sqlConnection.QueryFirstOrDefaultAsync<DbShift>(Sql, new { Id = id });
 
-            return dbShifts.Select(dbs => dbs.ToEntity()).ToList();
+            return dbShift is null
+                ? null
+                : dbShift.ToEntity();
         }
     }
 }
